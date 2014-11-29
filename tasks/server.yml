@@ -21,10 +21,3 @@
 
 - name: configure postgresql.conf
   template: src=postgresql.conf.j2 dest={{ pgsql_db_dir }}/postgresql.conf owner={{ pgsql_user }} group={{ pgsql_group }} mode=0700
-
-- name: stop pgsql
-  command: 'stop pgsql'
-  ignore_errors: True
-
-- name: start pgsql
-  command: 'start pgsql'

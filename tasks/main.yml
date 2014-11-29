@@ -1,3 +1,4 @@
 - include: client.yml
 - include: server.yml
+  notify: restart pgsql
   when: pgsql_enable_server == true

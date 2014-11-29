@@ -1,0 +1,2 @@
+- name: restart pgsql
+  shell: 'stop pgsql; start pgsql'
