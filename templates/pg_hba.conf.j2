@@ -1,0 +1,10 @@
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# "local" is for Unix domain socket connections only
+local   all             postgres                                ident
+
+{% if pgsql_acls is defined -%}
+{% for acl in pgsql_acls -%}
+{{ acl['type'] }}    {{ acl['db_name'] }}    {{ acl['user'] }}    {{ acl['ipaddress'] }}    {{ acl['method'] }}
+{% endfor %}
+{% endif %}

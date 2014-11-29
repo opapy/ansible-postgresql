@@ -1,0 +1,43 @@
+listen_addresses = '*' 
+max_connections = {{ pgsql_max_connections|default('100') }}
+shared_buffers = {{ pgsql_shared_buffers|default('1GB') }}
+work_mem = {{ pgsql_work_mem|default('32MB') }}
+
+# replication する場合はhot_standbyにしてスレーブで読めるwal形式を指定する
+wal_level = '{{ pgsql_wal_level|default('minimal') }}'
+
+# localを指定するとスレーブのwal書き込みを待たずコミットメッセージが送出される
+synchronous_commit = '{{ pgsql_synchronous_commit|default('local') }}'
+
+wal_buffers = {{ pgsql_wal_buffers|default('16MB') }}
+wal_writer_delay = {{ pgsql_wal_writer_delay|default('200ms') }}
+
+checkpoint_segments = {{ pgsql_checkpoint_segments|default(32) }}                # in logfile segments, min 1, 16MB each
+checkpoint_timeout = {{ pgsql_checkpoint_timeout|default('30min') }}              # range 30s-1h
+
+# wal_level='minimalの場合は0、それ以外はスレーブサーバ + 1の数を指定
+max_wal_senders = {{ pgsql_max_wal_senders|default(0) }}
+
+# checkpoint_segmentsとどう違うんだっけ
+wal_keep_segments = {{ pgsql_wal_keep_segments|default('32') }}
+
+# スタンバイ中でもクエリの実行を許可する。マスターノードでもonにして問題ない
+hot_standby = {{ pgsql_hot_standby|default('off') }}
+
+random_page_cost = {{ pgsql_random_page_cost|default(1.0) }}
+effective_cache_size = {{ pgsql_effective_cache_size|default('2GB') }}
+
+deadlock_timeout = {{ pgsql_deadlock_timeout|default('5s') }}
+
+# default
+log_timezone = 'Japan'
+datestyle = 'iso, mdy'
+timezone = '{{ pgsql_timezone|default("UTC") }}'
+
+lc_messages = 'C'                       # locale for system error message
+                                        # strings
+lc_monetary = 'C'                       # locale for monetary formatting
+lc_numeric = 'C'                        # locale for number formatting
+lc_time = 'C'                           # locale for time formatting
+
+default_text_search_config = 'pg_catalog.english'

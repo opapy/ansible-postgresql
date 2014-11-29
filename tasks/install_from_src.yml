@@ -1,0 +1,24 @@
+- name: install dependence packages
+  yum: name={{ item }} state=installed
+  with_items:
+    - gcc
+    - readline-devel
+    - zlib-devel 
+
+- name: wget pgsql ver.{{ pgsql_version }} package
+  get_url: url={{ pgsql_src_url }} dest={{ src_dir }}
+
+- name: expand pgsql 
+  shell: tar xzvf postgresql-{{ pgsql_version }}.tar.gz chdir={{ src_dir }}
+
+- name: install pgsql
+  shell: >-
+    ./configure --prefix={{ pgsql_prefix }} &&
+    make &&
+    make install chdir={{ src_dir }}/postgresql-{{ pgsql_version }} 
+
+- name: create symlink
+  file: src={{ pgsql_prefix }} dest={{ pgsql_symlink }} state=link
+
+- name: add ldconfig
+  command: echo "{{ pgsql_symlink }}/lib" > /etc/ld.so.conf.d/pgsql.conf && ldconfig

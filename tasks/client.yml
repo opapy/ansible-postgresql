@@ -1,0 +1,8 @@
+- name: get currently installed pgsql version
+  shell: "{{ pgsql_symlink }}/bin/psql --version"
+  register: result
+  always_run: yes
+  ignore_errors: True
+
+- include: install_from_src.yml
+  when: result.get('stdout') != 'psql (PostgreSQL) {{ pgsql_version }}'

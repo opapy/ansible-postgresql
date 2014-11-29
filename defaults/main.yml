@@ -1,0 +1,10 @@
+pgsql_version: "9.3.5"
+pgsql_src_url: "http://ftp.postgresql.org/pub/source/v{{ pgsql_version }}/postgresql-{{ pgsql_version }}.tar.gz"
+pgsql_prefix: "/usr/local/pgsql-{{ pgsql_version }}"
+pgsql_symlink: "/usr/local/pgsql"
+pgsql_user: postgres
+pgsql_group: postgres
+pgsql_uid : 26
+pgsql_gid : 26
+pgsql_db_dir: '/var/postgres/data'
+pgsql_pid_path: '{{ pgsql_db_dir }}/postgresql.pid'

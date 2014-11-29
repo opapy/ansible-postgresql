@@ -1,0 +1,30 @@
+- name: add group
+  group: name={{ pgsql_group }} gid={{ pgsql_gid }}
+- name: add user
+  user: name={{ pgsql_user }} uid={{ pgsql_uid }} group={{ pgsql_group }} home=/var/postgres
+
+- name: check database
+  shell: "[ -d {{ pgsql_db_dir }} ]"
+  register: is_db_exist
+  always_run: True
+  ignore_errors: True
+
+- name: initdb
+  shell: su - postgres -c '{{ pgsql_symlink }}/bin/initdb -E UTF_8 -D {{ pgsql_db_dir }} --no-locale'
+  when: is_db_exist.get('rc') != 0
+
+- name: create startup script
+  template: src=pgsql.conf.j2 dest=/etc/init/pgsql.conf owner=root group=root mode=0755
+
+- name: configure pg_hba
+  template: src=pg_hba.conf.j2 dest={{ pgsql_db_dir }}/pg_hba.conf owner={{ pgsql_user }} group={{ pgsql_group }} mode=0700
+
+- name: configure postgresql.conf
+  template: src=postgresql.conf.j2 dest={{ pgsql_db_dir }}/postgresql.conf owner={{ pgsql_user }} group={{ pgsql_group }} mode=0700
+
+- name: stop pgsql
+  command: 'stop pgsql'
+  ignore_errors: True
+
+- name: start pgsql
+  command: 'start pgsql'
