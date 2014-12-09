@@ -6,16 +6,16 @@
     - zlib-devel 
 
 - name: wget pgsql ver.{{ pgsql_version }} package
-  get_url: url={{ pgsql_src_url }} dest={{ src_dir }}
+  get_url: url={{ pgsql_src_url }} dest=/tmp
 
 - name: expand pgsql 
-  shell: tar xzvf postgresql-{{ pgsql_version }}.tar.gz chdir={{ src_dir }}
+  shell: tar xzvf postgresql-{{ pgsql_version }}.tar.gz chdir=/tmp
 
 - name: install pgsql
   shell: >-
     ./configure --prefix={{ pgsql_prefix }} &&
     make &&
-    make install chdir={{ src_dir }}/postgresql-{{ pgsql_version }} 
+    make install chdir=/tmp/postgresql-{{ pgsql_version }} 
 
 - name: create symlink
   file: src={{ pgsql_prefix }} dest={{ pgsql_symlink }} state=link
