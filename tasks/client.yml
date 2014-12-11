@@ -5,4 +5,4 @@
   ignore_errors: True
 
 - include: install_from_src.yml
-  when: result.get('stdout') != 'psql (PostgreSQL) {{ pgsql_version }}'
+  when: not result.get('stderr')
