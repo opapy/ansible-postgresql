@@ -5,4 +5,4 @@
   ignore_errors: True
 
 - include: install_from_src.yml
-  when: not result.get('stderr')
+  when: result.get('stderr')
