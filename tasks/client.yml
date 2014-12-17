@@ -1,5 +1,5 @@
 - name: get currently installed pgsql version
-  shell: "{{ pgsql_symlink }}/bin/psql --version"
+  shell: "{{ pgsql_prefix }}/bin/psql --version"
   register: result
   always_run: yes
   ignore_errors: True

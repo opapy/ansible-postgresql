@@ -10,7 +10,7 @@
   ignore_errors: True
 
 - name: initdb
-  shell: su - postgres -c '{{ pgsql_symlink }}/bin/initdb -E UTF_8 -D {{ pgsql_db_dir }} --no-locale'
+  shell: su - postgres -c '{{ pgsql_prefix }}/bin/initdb -E UTF_8 -D {{ pgsql_db_dir }} --no-locale'
   when: is_db_exist.get('rc') != 0
 
 - name: create startup script
