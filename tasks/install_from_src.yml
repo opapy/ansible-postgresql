@@ -18,4 +18,4 @@
     make install chdir=/var/tmp/postgresql-{{ pgsql_version }} 
 
 - name: add ldconfig
-  command: echo "{{ pgsql_prefix }}/lib" > /etc/ld.so.conf.d/pgsql.conf && ldconfig
+  shell: "echo {{ pgsql_prefix }}/lib > /etc/ld.so.conf.d/pgsql.conf && ldconfig"
