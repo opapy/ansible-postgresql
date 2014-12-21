@@ -2,5 +2,4 @@
   when: pgsql_install_client == true
 
 - include: server.yml
-  notify: restart pgsql
   when: pgsql_install_server == true
