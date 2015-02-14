@@ -14,7 +14,10 @@
   when: is_db_exist.get('rc') != 0
 
 - name: create startup script
-  template: src=pgsql.conf.j2 dest=/etc/init/pgsql.conf owner=root group=root mode=0755
+  template: src=pgsqld.j2 dest=/etc/init.d/pgsqld owner=root group=root mode=0755
+
+- name: chkconfig on 
+  shell: chkconfig pgsqld on 
 
 - name: configure pg_hba
   template: src=pg_hba.conf.j2 dest={{ pgsql_db_dir }}/pg_hba.conf owner={{ pgsql_user }} group={{ pgsql_group }} mode=0700

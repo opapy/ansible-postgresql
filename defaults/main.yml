@@ -1,6 +1,6 @@
 pgsql_install_server: False
 pgsql_install_client: False
-pgsql_version: "9.3.5"
+pgsql_version: "9.4.1"
 pgsql_src_url: "http://ftp.postgresql.org/pub/source/v{{ pgsql_version }}/postgresql-{{ pgsql_version }}.tar.gz"
 pgsql_prefix: "/opt/pgsql-{{ pgsql_version }}"
 pgsql_user: postgres

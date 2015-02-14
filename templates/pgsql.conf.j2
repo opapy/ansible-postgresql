@@ -1,8 +1,0 @@
-description "PostgreSQL Server"
-author "PostgreSQL"
- 
-start on runlevel [2345]
-stop on runlevel [016]
-respawn
-
-exec su -c "{{ pgsql_prefix }}/bin/postgres -D {{ pgsql_db_dir }} -c config_file={{ pgsql_db_dir }}/postgresql.conf" {{ pgsql_user }} 
